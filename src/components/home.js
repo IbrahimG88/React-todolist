@@ -100,7 +100,11 @@ class Home extends React.Component {
                             <div>
                                 Task {index + ":"}{item}
                                 <button onClick={()=> {this.remove(index)}}>Delete</button>
-                                <button onClick={this.editToggle}>Edit</button>
+                                  <button onClick={this.editToggle}>Edit</button>
+
+                        {editClicked ? (<input  value={item} onChange={(e) =>
+                        this.edit(e,index)}/>) : null}
+
                             </div>
 
 
@@ -118,24 +122,3 @@ export default Home;
 
 
 
-/*
-header react to do app
-enhance....
-
-input create
-
-input enter new item
-
-input filter list
-
-list
-list item: has a checkbox
-has 3 columns
-task + number
-the task itself
-checkbox
-
-2 buttons:
-clear the list
-reset the list
- */
