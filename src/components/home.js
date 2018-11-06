@@ -9,13 +9,16 @@ class Home extends React.Component {
            newItem:"",
          allItems:["asss","ddddd","sxcddd"],
            searchResults:[],
-           notsearching: true
+           notsearching: true,
+           editClicked: false
        };
 
        this.addItem = this.addItem.bind(this);
        this.search = this.search.bind(this);
        this.handleChange=this.handleChange.bind(this);
        this.remove = this.remove.bind(this);
+       this.edit = this.edit.bind(this);
+       this.editToggle = this.editToggle.bind(this);
    }
 
    addItem(){
@@ -50,8 +53,21 @@ class Home extends React.Component {
        this.setState({allItems: arrayModifier});
    }
 
+   edit(e, i){
+       let itemToEdit = e.target.value;
+       let arrayAfterEdit = [...this.state.allItems];
+       arrayAfterEdit[i] = itemToEdit;
+       this.setState({allItems: arrayAfterEdit});
+       
+   }
+
+   editToggle(){
+       this.setState({editClicked: !this.state.editClicked});
+   }
+
     render() {
       let  notsearching = this.state.notsearching;
+      let editClicked = this.state.editClicked;
         return (
             <div>
             <header>
@@ -68,18 +84,23 @@ class Home extends React.Component {
                 { return(
 
                     <div>
-                  Task {index + ":"}{item}
+                        {editClicked ? null : (<span>Task {index + ":"}{item}</span>)}
+
                     <button onClick={()=> {this.remove(index)}}>Delete</button>
+                        <button onClick={this.editToggle}>Edit</button>
+
+                        {editClicked ? (<input  value={item} onChange={(e) =>
+                        this.edit(e,index)}/>) : null}
+
                     </div>
-
-
-
                 );
-                })):(this.state.searchResults.map((item,index)=>{
+                })):
+                    (this.state.searchResults.map((item,index)=>{
                         return(
                             <div>
                                 Task {index + ":"}{item}
                                 <button onClick={()=> {this.remove(index)}}>Delete</button>
+                                <button onClick={this.editToggle}>Edit</button>
                             </div>
 
 
